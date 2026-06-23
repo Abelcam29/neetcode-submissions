@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        unordered_map<char, int> mp;
+        int l = 0, r = 0;
+        int maxfreq = 0, maxlen = 0;
+        int n = s.size();
+        while(r < n)
+        {
+            mp[s[r]]++;
+            maxfreq = max(maxfreq, mp[s[r]]);
+            if((r - l + 1) - maxfreq >= k)
+            {
+                while((r - l + 1) - maxfreq > k)
+                {
+                    mp[s[l]]--;
+                    l++;
+                }
+                maxlen = max(maxlen, r - l + 1);
+            }
+            r++;
+        }
+        if(maxfreq+k >= n)
+        {
+            return n;
+        }
+        return maxlen;
+    }
+};
